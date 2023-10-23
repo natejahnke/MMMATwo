@@ -6,9 +6,11 @@ import {
   Scripts,
   ScrollRestoration,
   useLoaderData,
+  useLocation
 } from "@remix-run/react";
 import tailwindstyles from "./tailwind.css";
 import BottomNavbar from "~/components/BottomNavbar";
+import { motion } from 'framer-motion';
 
 export let links = () => {
   return [{ rel: "stylesheet", href: tailwindstyles }];
@@ -24,6 +26,17 @@ export const loader = () => {
 };
 
 export function Layout({ children }) {
+  const location = useLocation();
+
+  // Framer Motion Variants
+  const swipeVariants = {
+    initial: { x: 400, opacity: 0 },
+    in: { 
+      x: [400, 20, 0],  // keyframes: start at 400, bounce to 20, settle at 0
+      opacity: [0, 1, 1]
+    },
+    out: { x: -400, opacity: 0 }
+  };
   return (
     /* 
     It is possible to define the Default Layout here. 
@@ -31,8 +44,20 @@ export function Layout({ children }) {
     Examples of components to be added here: Toolbar/Navbar, Footer and etc...
     */
     <>
-      <BottomNavbar  />
-      {children}
+      <BottomNavbar />
+      <motion.div
+        initial="initial"
+        animate="in"
+        exit="out"
+        variants={swipeVariants}
+        transition={{
+          x: { type: "spring", stiffness: 300, damping: 20, times: [0, 0.8, 1] },
+          opacity: { duration: 1 }
+        }}
+        key={location.pathname}
+      >
+        <Outlet />
+      </motion.div>
     </>
   );
 }
