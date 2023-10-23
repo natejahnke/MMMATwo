@@ -6,7 +6,12 @@
   "scripts": {
     "build": "remix build",
     "dev": "remix dev --manual",
-    "start": "remix-serve ./build/index.js"
+    "start": "remix-serve ./build/index.js",
+    "icons": "npx @svgr/cli --out-dir app/components/icons -- app/icons",
+    "icons:watch": "npm-watch icons",
+    "dev:svg": "run-s icons icons:watch",
+    // remix dev
+    "dev:remix": "remix dev",
   },
   "dependencies": {
     "@remix-run/css-bundle": "^2.1.0",
@@ -35,5 +40,14 @@
   },
   "engines": {
     "node": ">=18.0.0"
+  },
+  "watch": {
+    "icons": {
+      "patterns": [
+        "icons"
+      ],
+      "extensions": "svg",
+      "quiet": false
+    }
   }
 }
