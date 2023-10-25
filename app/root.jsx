@@ -6,7 +6,8 @@ import {
   Scripts,
   ScrollRestoration,
   useLoaderData,
-  useLocation
+  useLocation,
+  useNavigation,
 } from "@remix-run/react";
 import tailwindstyles from "./tailwind.css";
 import BottomNavbar from "~/components/BottomNavbar";
@@ -25,45 +26,11 @@ export const loader = () => {
   };
 };
 
-export function Layout({ children }) {
-  const location = useLocation();
 
-  // Framer Motion Variants
-  const swipeVariants = {
-    initial: { x: 400, opacity: 0 },
-    in: { 
-      x: [400, 20, 0],  // keyframes: start at 400, bounce to 20, settle at 0
-      opacity: [0, 1, 1]
-    },
-    out: { x: -400, opacity: 0 }
-  };
-  return (
-    /* 
-    It is possible to define the Default Layout here. 
-    In that way, all the pages are going to be in the same format.
-    Examples of components to be added here: Toolbar/Navbar, Footer and etc...
-    */
-    <>
-      <BottomNavbar />
-      <motion.div
-        initial="initial"
-        animate="in"
-        exit="out"
-        variants={swipeVariants}
-        transition={{
-          x: { type: "spring", stiffness: 300, damping: 20, times: [0, 0.8, 1] },
-          opacity: { duration: 1 }
-        }}
-        key={location.pathname}
-      >
-        <Outlet />
-      </motion.div>
-    </>
-  );
-}
 
 export default function App() {
   const { env } = useLoaderData();
+  const navigation = useNavigation();
   return (
     <html lang="en">
       <head>
@@ -74,12 +41,16 @@ export default function App() {
       </head>
       <body className="w-full h-full mx-auto my-auto bg-primary flex justify-center items-center">
         <div className="w-[375px]  flex flex-col relative">
-          {/* <div className="overflow-y-auto flex-grow mb-5">  */}
-          <Layout>
+          
+          <div
+          className={
+            navigation.state === "loading" ? "loading" : ""
+          }
+          id="detail"
+        ></div>
+        <BottomNavbar />
             <Outlet />
 
-            {/* </div> */}
-          </Layout>
         </div>
 
         <script

@@ -59,7 +59,11 @@ export default function EventsIndex() {
               return (
                 <div className="overflow-y-auto h-[400px] mb-2">
                   {resolvedEvents.data.map((event, index) => (
-                    <Link to={`/events/${event.EventID}`} key={event.EventID}>
+                    <Link
+                      prefetch="intent"
+                      to={`/events/${event.EventID}`}
+                      key={event.EventID}
+                    >
                       <EventCard
                         event={event}
                         bgColor={

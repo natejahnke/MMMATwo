@@ -14,7 +14,7 @@ function PPVLogo({ numberValue }) {
         {/* Wrapper for skew */}
         <div className="-skew-x-12">
           {/* Number Text */}
-          <div className="relative -top-2 left-2 text-center text-black text-[10px] font-black">
+          <div className="relative -top-2 left-2 text-center text-black text-[14px] font-black">
             {numberValue}
           </div>
         </div>

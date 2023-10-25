@@ -1,6 +1,6 @@
-import { Suspense } from "react";
+import { Suspense, useState, useTransition } from "react";
 import {
-  Link,
+  NavLink,
   useLoaderData,
   useParams,
   useSearchParams,
@@ -36,8 +36,19 @@ export default function EventPage() {
   const defaultMainCardCount = event && event.PPV ? 6 : 5;
 
   const [searchParams] = useSearchParams(); // <-- added this line
-  const currentFilter = searchParams.get("filter") || "MAIN CARD"; // <-- added this line
+  const initialFilter = searchParams.get("filter") || "MAIN CARD";
 
+  // Create a state variable for the current filter
+  const [currentFilter, setCurrentFilter] = useState(initialFilter);
+
+  const [isPending, startTransition] = useTransition();
+
+  // Handler to set filter
+  const handleSetFilter = (filter) => {
+    startTransition(() => {
+      setCurrentFilter(filter);
+    });
+  };
   // const eventResource = useEvent(eventId);
   // Filter matchups based on MAIN CARD count
   const filteredMatchups = fights.filter((matchup, index) =>
@@ -52,32 +63,39 @@ export default function EventPage() {
         <EventBanner event={event.read()} />
       </Suspense>
       <div className="mb-2 flex justify-between">
-  <div>
-    <Link
-      to="?filter=MAIN%20CARD"
-      className={`text-${
-        currentFilter === "MAIN CARD" ? "secondary" : "tertiary"
-      } mr-2`}
-    >
-      MAIN CARD
-    </Link>
-    <Link
-      to="?filter=PRELIMS"
-      className={`text-${
-        currentFilter === "PRELIMS" ? "secondary" : "tertiary"
-      }`}
-    >
-      PRELIMS
-    </Link>
-  </div>
-  <div>
-    {/* Your new text element here */}
-    <span className="text-secondary">
-      {currentFilter === "MAIN CARD" ? "9:00 PM CDT" : currentFilter === "PRELIMS" ? "7:00 PM CDT" : ""}
-    </span>
-  </div>
-</div>
-
+        <div>
+          <NavLink
+            onClick={() => handleSetFilter("MAIN CARD")} // <-- Update state here
+            to="?filter=MAIN%20CARD"
+            className={`mr-2 ${
+              currentFilter === "MAIN CARD" ? "text-secondary" : "text-tertiary"
+            }`}
+          >
+            MAIN CARD
+          </NavLink>
+          <NavLink
+            onClick={() => handleSetFilter("PRELIMS")} // <-- Update state here
+            to="?filter=PRELIMS"
+            className={
+              currentFilter === "PRELIMS" // <-- Check state here
+                ? "text-secondary"
+                : "text-tertiary"
+            }
+          >
+            PRELIMS
+          </NavLink>
+        </div>
+        <div>
+          {/* Your new text element here */}
+          <span className="text-secondary">
+            {currentFilter === "MAIN CARD"
+              ? "9:00 PM CDT"
+              : currentFilter === "PRELIMS"
+              ? "7:00 PM CDT"
+              : ""}
+          </span>
+        </div>
+      </div>
 
       <div className="overflow-y-auto h-[400px] mb-2">
         {filteredMatchups.map((matchup, index) => (
