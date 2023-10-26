@@ -34,7 +34,7 @@ export default function Fighters() {
               <img
                 src={`https://bigsnqhiqpvakxfhqcvu.supabase.co/storage/v1/object/public/Fighters/${fighter.InstagramURL}.jpg`}
                 alt={fighter.Name}
-                className="object-cover w-full h-full opacity-60 group-hover:opacity-100 transition-opacity duration-300"
+                className="object-cover w-full h-full opacity-60 group-hover:opacity-100 group-hover:scale-110 transition-all duration-300 ease-in-out"
               />
               <div className="absolute inset-0 bg-black bg-opacity-50">
                 <div className="absolute top-0 right-0 text-sm text-white">
