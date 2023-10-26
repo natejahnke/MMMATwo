@@ -18,7 +18,7 @@ export default {
         center: true,
       },
       fontFamily: {
-        sans: ["Caveat", "Helvetica", "Arial", "sans-serif"],
+        sans: ["Roboto Slab", "Helvetica", "Arial", "sans-serif"],
         // display: ["Dosis", "sans-serif"],
         // body: ["Oswald", "sans-serif"],
       },

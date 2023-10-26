@@ -2,31 +2,33 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Global Settings */
 @layer base {
   html {
-    font-family: "Caveat", system-ui, sans-serif;
+    font-family: "Roboto Slab", system-ui, sans-serif;
   }
 }
 
-/* Hide scrollbar for Chrome, Safari and Opera */
-.no-scrollbar::-webkit-scrollbar {
+/* Scrollbar Customizations */
+.no-scrollbar::-webkit-scrollbar,
+.element::-webkit-scrollbar {
   display: none;
 }
 
-/* Hide scrollbar for IE, Edge and Firefox */
 .no-scrollbar {
-  -ms-overflow-style: none;  /* IE and Edge */
-  scrollbar-width: none;  /* Firefox */
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
 
-/* Hide horizontal scrollbar for Chrome, Safari and Opera */
-::-webkit-scrollbar {
-  height: 0;
+.element {
+  scrollbar-width: vertical;
+  -ms-overflow-style: scrollbar;
+  overflow-x: hidden;
 }
 
-/* Custom thin scrollbar styles */
 ::-webkit-scrollbar {
   width: 5px;
+  height: 0;
 }
 
 ::-webkit-scrollbar-thumb {
@@ -37,13 +39,66 @@
   @apply bg-primary;
 }
 
-/* Hide horizontal scrollbar for Firefox */
-.element {
-  scrollbar-width: vertical;
+/* Truncate and Tooltip */
+.truncate {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100px;
+  position: relative;
 }
 
-/* Hide horizontal scrollbar for IE and Edge */
-.element {
-  -ms-overflow-style: scrollbar;
-  overflow-x: hidden;
+.tooltip {
+  visibility: hidden;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  padding: 5px;
+  border-radius: 6px;
+  position: absolute;
+  z-index: 1;
+  bottom: 125%;
+  left: 50%;
+  margin-left: -60px;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.truncate:hover .tooltip {
+  visibility: visible;
+  opacity: 1;
+}
+
+/* Marquee Animation */
+.marquee {
+  white-space: nowrap;
+  transition: opacity 0.3s ease;
+}
+
+.marquee:hover {
+  animation: marquee 10s linear infinite;
+}
+
+@keyframes marquee {
+  0% { transform: translateX(100%); }
+  100% { transform: translateX(-100%); }
+}
+
+/* Opacity and Hover */
+.opacity-0 {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.opacity-100 {
+  opacity: 1;
+}
+
+.hover:opacity-0:hover {
+  opacity: 0;
+}
+
+.hover:opacity-100:hover {
+  opacity: 1;
+  pointer-events: auto;
 }
