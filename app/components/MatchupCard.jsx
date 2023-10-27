@@ -93,16 +93,26 @@ function MatchupCard({
   const fighterWeight = weightClassToWeight(matchup.WeightClass);
 
   return (
-    <div className="flex justify-between items-start relative w-full h-[196px] rounded-lg mb-2">
-      {/* Fighter 1 */}
-      <div className="relative">
-        <img
-          src={fighter1ImageUrl}
-          alt={fighter1.Name}
-          className="w-[158px] h-[196px] object-cover rounded-lg"
-        />
-        <div className="w-[158px] text-main leading-tight absolute bottom-0 left-0 p-2 bg-gradient-to-t from-black to-transparent rounded-bl-lg rounded-br-lg">
-          {/* <div className="flex justify-between items-center text-tertiary">
+    <div>
+      <div className="text-xs text-secondary flex justify-between items-center w-full">
+        <p className="self-start text-[10px]">#{matchup.FightNumber}</p>
+        <h3 className="text-center flex-grow text-align-center">
+          {matchup.WeightClass} Bout
+        </h3>
+        <div className="self-end" style={{ width: "1rem" }}></div>{" "}
+        {/* Spacer to balance #1 */}
+      </div>
+
+      <div className="flex justify-between items-start relative w-full h-[196px] rounded-lg mb-2">
+        {/* Fighter 1 */}
+        <div className="relative">
+          <img
+            src={fighter1ImageUrl}
+            alt={fighter1.Name}
+            className="w-[158px] h-[196px] object-cover rounded-lg"
+          />
+          <div className="w-[158px] text-main leading-tight absolute bottom-0 left-0 p-2 bg-gradient-to-t from-black to-transparent rounded-bl-lg rounded-br-lg">
+            {/* <div className="flex justify-between items-center text-tertiary">
             <div>
               <span className="text-xs">{fighter1Record}</span>
             </div>
@@ -110,34 +120,34 @@ function MatchupCard({
               <span className="text-xs">{fighterWeight}</span>
             </div>
           </div> */}
-          <p className="text-sm uppercase">{firstName1}</p>
-          <p className="text-sm uppercase">{lastName1}</p>
+            <p className="text-sm uppercase">{firstName1}</p>
+            <p className="text-sm uppercase">{lastName1}</p>
+          </div>
         </div>
-      </div>
 
-      {/* VS Text */}
-      <div className="absolute left-1/2 top-1/2 flex flex-col items-center transform -translate-x-1/2 -translate-y-1/2 text-sm text-tertiary">
-        <span className="self-center mb-2">-VS-</span>
-      </div>
-
-      {/* Octagons at the bottom, centered horizontally */}
-      <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 translate-y-0">
-        <div className="flex flex-col items-center space-y-1">
-          {renderOctagons()}
+        {/* VS Text */}
+        <div className="absolute left-1/2 top-1/2 flex flex-col items-center transform -translate-x-1/2 -translate-y-1/2 text-sm text-tertiary">
+          <span className="self-center mb-2">-VS-</span>
         </div>
-      </div>
 
-      {/* Fighter 2 */}
-      <div className="relative">
-        <img
-          src={fighter2ImageUrl}
-          alt={fighter2.Name}
-          className="w-[158px] h-[196px] object-cover rounded"
-        />
-        <div className="w-[158px] text-main leading-tight absolute bottom-0 left-0 p-2 bg-gradient-to-t from-black to-transparent rounded-bl-lg rounded-br-lg">
-          {/* <p className="text-sm uppercase">{firstName2}</p>
+        {/* Octagons at the bottom, centered horizontally */}
+        <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 translate-y-0 mb-2">
+          <div className="flex flex-col items-center space-y-1">
+            {renderOctagons()}
+          </div>
+        </div>
+
+        {/* Fighter 2 */}
+        <div className="relative">
+          <img
+            src={fighter2ImageUrl}
+            alt={fighter2.Name}
+            className="w-[158px] h-[196px] object-cover rounded"
+          />
+          <div className="w-[158px] text-main leading-tight absolute bottom-0 left-0 p-2 bg-gradient-to-t from-black to-transparent rounded-bl-lg rounded-br-lg">
+            {/* <p className="text-sm uppercase">{firstName2}</p>
           <p className="text-sm uppercase">{lastName2}</p> */}
-          {/* <div className="flex justify-between items-center text-tertiary">
+            {/* <div className="flex justify-between items-center text-tertiary">
             <div>
               <span className="text-xs">{fighter2Record}</span>
             </div>
@@ -145,8 +155,9 @@ function MatchupCard({
               <span className="text-xs">{fighterWeight}</span>
             </div>
           </div> */}
-          <p className="text-sm uppercase">{firstName2}</p>
-          <p className="text-sm uppercase">{lastName2}</p>
+            <p className="text-sm uppercase">{firstName2}</p>
+            <p className="text-sm uppercase">{lastName2}</p>
+          </div>
         </div>
       </div>
     </div>

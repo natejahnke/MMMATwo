@@ -46,9 +46,9 @@ export default function EventsIndex() {
         <Link to="#" className="text-secondary mr-2">
           UPCOMING
         </Link>
-        <Link to="#" className="text-tertiary">
+        {/* <Link to="#" className="text-tertiary">
           PAST
-        </Link>
+        </Link> */}
       </div>
       <Suspense fallback={<EventCardSkeleton />}>
         <Await resolve={events}>
