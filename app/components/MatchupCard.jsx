@@ -33,11 +33,19 @@ function MatchupCard({
     ? buildImageUrl(baseUrl, fighter2.InstagramURL)
     : defaultImage;
 
-  function formatName(fullName) {
-    const [firstName, ...lastNameParts] = fullName.split(" ");
-    const lastName = lastNameParts.join(" ");
-    return `${firstName.charAt(0)}. ${lastName}`;
-  }
+  const parseName = (fullName) => {
+    const parts = fullName.split(" ");
+    const firstName = parts.shift();
+    const lastName = parts.join(" ");
+    return { firstName, lastName };
+  };
+
+  const { firstName: firstName1, lastName: lastName1 } = parseName(
+    matchup.Fighter1Name
+  );
+  const { firstName: firstName2, lastName: lastName2 } = parseName(
+    matchup.Fighter2Name
+  );
 
   const handleImageError = (e) => {
     e.target.src = defaultImage;
@@ -46,8 +54,8 @@ function MatchupCard({
   const fighter1Record = useFighterURLRecord(matchup.Fighter1URL);
   const fighter2Record = useFighterURLRecord(matchup.Fighter2URL);
 
-  console.log("Fighter 1 Record:", fighter1Record); // Log Fighter 1 Record
-  console.log("Fighter 2 Record:", fighter2Record); // Log Fighter 2 Record
+  console.log("Fighter 1 Record:", fighter1Record);
+  console.log("Fighter 2 Record:", fighter2Record);
 
   function renderOctagons() {
     const octagonCount = matchup.Title ? 5 : 3;
@@ -56,69 +64,90 @@ function MatchupCard({
     ));
   }
 
+  const weightClassToWeight = (weightClass) => {
+    const weightMap = {
+      Strawweight: "115 lbs",
+      Flyweight: "125 lbs",
+      Bantamweight: "135 lbs",
+      Featherweight: "145 lbs",
+      Lightweight: "155 lbs",
+      Welterweight: "170 lbs",
+      Middleweight: "185 lbs",
+      "Light Heavyweight": "205 lbs",
+      Heavyweight: "265 lbs",
+    };
+
+    let isWomens = false;
+    let lookupClass = weightClass;
+
+    if (weightClass.startsWith("Women's ")) {
+      isWomens = true;
+      lookupClass = weightClass.replace("Women's ", "");
+    }
+
+    const weight = weightMap[lookupClass];
+
+    return weight ? (isWomens ? `W ${weight}` : weight) : "Unknown";
+  };
+
+  const fighterWeight = weightClassToWeight(matchup.WeightClass);
+
   return (
-    <div
-      className={[
-        "relative w-[359px] h-[70px] mb-1 rounded-lg flex items-center",
-        bgColor,
-        viewTransitionName,
-      ].join(" ")}
-    >
-      {/* <!-- Weight Class --> */}
-      <div className="absolute top-1 left-1/2 transform -translate-x-1/2 text-2xs text-quaternary">
-        {matchup.WeightClass} Bout
-      </div>
-      <div className="absolute bottom-1 left-1/2 transform -translate-x-1/2 text-2xs text-quaternary flex">
-        {/* <img src="/public/images/octagon.svg" alt="Description" />
-        <img src="/public/images/octagon.svg" alt="Description" />
-        <img src="/public/images/octagon.svg" alt="Description" /> */}
-        {renderOctagons()}
-      </div>
-      {/* <!-- Fighter 1 Side --> */}
-      <div className="flex items-center">
+    <div className="flex justify-between items-start relative w-full h-[196px] rounded-lg mb-2">
+      {/* Fighter 1 */}
+      <div className="relative">
         <img
           src={fighter1ImageUrl}
-          alt="Fighter 1"
-          className="ml-2 w-10 h-10 rounded-full"
-          onError={handleImageError}
+          alt={fighter1.Name}
+          className="w-[158px] h-[196px] object-cover rounded-lg"
         />
-        <div className="ml-[1px] mt-1">
-          <p className="text-sm text-secondary uppercase">
-            {formatName(matchup.Fighter1Name)}
-          </p>
-          {/* <!-- Other Fighter 1 details can go here --> */}
-          <div className="flex space-x-2 items-start">
-            
-            {/* <div className="text-xs">
-              
-              <US />
-            </div> */}
-            <div className="text-xs text-five">{fighter1Record}</div>
-          </div>
+        <div className="w-[158px] text-main leading-tight absolute bottom-0 left-0 p-2 bg-gradient-to-t from-black to-transparent rounded-bl-lg rounded-br-lg">
+          {/* <div className="flex justify-between items-center text-tertiary">
+            <div>
+              <span className="text-xs">{fighter1Record}</span>
+            </div>
+            <div>
+              <span className="text-xs">{fighterWeight}</span>
+            </div>
+          </div> */}
+          <p className="text-sm uppercase">{firstName1}</p>
+          <p className="text-sm uppercase">{lastName1}</p>
         </div>
       </div>
 
-      {/* <!-- Fighter 2 Side --> */}
-      <div className="flex items-start ml-auto">
-        <div className="flex flex-col mt-1 mr-[1px]">
-          <p className="text-sm text-secondary uppercase">
-            {formatName(matchup.Fighter2Name)}
-          </p>
-          {/* <!-- Other Fighter 2 details can go here --> */}
-          <div className="flex space-x-2 items-start">
-            {/* <div className="text-xs">
-            
-              <US />
-            </div> */}
-            <div className="text-xs text-five">{fighter2Record}</div>
-          </div>
+      {/* VS Text */}
+      <div className="absolute left-1/2 top-1/2 flex flex-col items-center transform -translate-x-1/2 -translate-y-1/2 text-sm text-tertiary">
+        <span className="self-center mb-2">-VS-</span>
+      </div>
+
+      {/* Octagons at the bottom, centered horizontally */}
+      <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 translate-y-0">
+        <div className="flex flex-col items-center space-y-1">
+          {renderOctagons()}
         </div>
+      </div>
+
+      {/* Fighter 2 */}
+      <div className="relative">
         <img
           src={fighter2ImageUrl}
-          alt="Fighter 2"
-          className="mr-2 w-10 h-10 rounded-full"
-          onError={handleImageError}
+          alt={fighter2.Name}
+          className="w-[158px] h-[196px] object-cover rounded"
         />
+        <div className="w-[158px] text-main leading-tight absolute bottom-0 left-0 p-2 bg-gradient-to-t from-black to-transparent rounded-bl-lg rounded-br-lg">
+          {/* <p className="text-sm uppercase">{firstName2}</p>
+          <p className="text-sm uppercase">{lastName2}</p> */}
+          {/* <div className="flex justify-between items-center text-tertiary">
+            <div>
+              <span className="text-xs">{fighter2Record}</span>
+            </div>
+            <div>
+              <span className="text-xs">{fighterWeight}</span>
+            </div>
+          </div> */}
+          <p className="text-sm uppercase">{firstName2}</p>
+          <p className="text-sm uppercase">{lastName2}</p>
+        </div>
       </div>
     </div>
   );
