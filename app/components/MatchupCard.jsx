@@ -4,7 +4,7 @@ import useFighterURLRecord from "~/hooks/useFighterRecord";
 import fighterdefault from "~/images/fighterdefault.png";
 
 const buildImageUrl = (baseUrl, imageId, options = {}) => {
-  let url = `${baseUrl}${imageId}.jpg?format=origin`;
+  let url = `${baseUrl}${imageId}.webp?format=origin`;
 
   const params = new URLSearchParams();
   if (options.width) params.append("width", options.width);
