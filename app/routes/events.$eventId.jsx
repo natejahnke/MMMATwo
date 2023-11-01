@@ -97,7 +97,7 @@ export default function EventPage() {
         </div>
       </div>
 
-      <div className="overflow-y-auto h-[400px] mb-2">
+      <div className="overflow-y-auto  mb-2">
         {filteredMatchups.map((matchup, index) => (
           <MatchupContainer
             matchup={matchup}

@@ -11,7 +11,6 @@ import {
 } from "@remix-run/react";
 import tailwindstyles from "./tailwind.css";
 import BottomNavbar from "~/components/BottomNavbar";
-import { motion } from 'framer-motion';
 
 export let links = () => {
   return [{ rel: "stylesheet", href: tailwindstyles }];

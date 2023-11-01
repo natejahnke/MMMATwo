@@ -94,8 +94,10 @@ function MatchupCard({
 
   return (
     <div>
-      <div className="text-xs text-secondary flex justify-between items-center w-full">
-        <p className="self-start text-[10px]">#{matchup.FightNumber}</p>
+      <div
+        className={`text-xs text-secondary flex justify-between items-center w-full ${bgColor} rounded-lg mb-[2px]`}
+      >
+        <p className="self-start text-[10px] ml-2">#{matchup.FightNumber}</p>
         <h3 className="text-center flex-grow text-align-center">
           {matchup.WeightClass} Bout
         </h3>
@@ -135,6 +137,8 @@ function MatchupCard({
           <div className="flex flex-col items-center space-y-1">
             {renderOctagons()}
           </div>
+          {/* <div className="mt-2 text-tertiary">225</div>
+          <div>LBS</div> */}
         </div>
 
         {/* Fighter 2 */}
