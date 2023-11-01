@@ -55,7 +55,7 @@ export default function EventsIndex() {
           {(resolvedEvents) => {
             // Check if resolvedEvents is an array before calling .map()
             if (Array.isArray(resolvedEvents.data)) {
-              console.log("Resolved Events:", resolvedEvents.data); // Log the resolved events for debugging
+              // console.log("Resolved Events:", resolvedEvents.data); // Log the resolved events for debugging
               return (
                 <div className="overflow-y-auto h-[400px] mb-2">
                   {resolvedEvents.data.map((event, index) => (

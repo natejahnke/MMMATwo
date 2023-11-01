@@ -1,5 +1,5 @@
 function EventBanner({ event }) {
-  console.log("Received event in EventBanner:", event);  // Debugging line
+  // console.log("Received event in EventBanner:", event);  // Debugging line
 
   if (!event || !event.EventName) {
     return <div>Loading...</div>;

@@ -32,7 +32,7 @@ export default function Fighters() {
           return (
             <div key={index} className="w-[105px] h-[158px] relative overflow-hidden rounded-lg group">
               <img
-                src={`https://bigsnqhiqpvakxfhqcvu.supabase.co/storage/v1/object/public/Fighters/${fighter.InstagramURL}.jpg`}
+                src={`https://bigsnqhiqpvakxfhqcvu.supabase.co/storage/v1/object/public/Fighters/${fighter.InstagramURL}.webp`}
                 alt={fighter.Name}
                 className="object-cover w-full h-full  group-hover:scale-110 transition-all duration-300 ease-in-out"
               />

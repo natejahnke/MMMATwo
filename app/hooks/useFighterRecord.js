@@ -8,7 +8,7 @@ const useFighterURLRecord = (fighterURL) => {
 
   useEffect(() => {
     const fetchRecord = async () => {
-      console.log("Fetching record for fighterURL:", fighterURL); // Log the fighterURL being used
+      // console.log("Fetching record for fighterURL:", fighterURL); // Log the fighterURL being used
       const { data, error } = await supabase
         .from("Fighters")
         .select("Record")
@@ -26,7 +26,7 @@ const useFighterURLRecord = (fighterURL) => {
     fetchRecord();
   }, [fighterURL]);
 
-  console.log('Record state:', record);  // Log the current state of 'record'
+  // console.log('Record state:', record);  // Log the current state of 'record'
 
   return record;
 };

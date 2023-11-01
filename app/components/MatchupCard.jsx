@@ -54,8 +54,8 @@ function MatchupCard({
   const fighter1Record = useFighterURLRecord(matchup.Fighter1URL);
   const fighter2Record = useFighterURLRecord(matchup.Fighter2URL);
 
-  console.log("Fighter 1 Record:", fighter1Record);
-  console.log("Fighter 2 Record:", fighter2Record);
+  // console.log("Fighter 1 Record:", fighter1Record);
+  // console.log("Fighter 2 Record:", fighter2Record);
 
   function renderOctagons() {
     const octagonCount = matchup.Title ? 5 : 3;

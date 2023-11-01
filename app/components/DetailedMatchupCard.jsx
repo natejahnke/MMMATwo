@@ -13,7 +13,7 @@ function DetailedMatchupCard({ matchup, fighters }) {
         <div className="mt-8 ml-2 mb-2">
           <img
             className="w-[150px] h-[150px] rounded-lg "
-            src={`${baseUrl}${fighter1.InstagramURL}.jpg`}
+            src={`${baseUrl}${fighter1.InstagramURL}.webp`}
             alt={fighter1.Name}
           />
           <div className="text-slate-100 text-md">{fighter1.Name}</div>
@@ -26,7 +26,7 @@ function DetailedMatchupCard({ matchup, fighters }) {
         <div className=" mt-8 mr-2 mb-2">
           <img
             className="w-[150px] h-[150px] rounded-lg "
-            src={`${baseUrl}${fighter2.InstagramURL}.jpg`}
+            src={`${baseUrl}${fighter2.InstagramURL}.webp`}
             alt={fighter2.Name}
           />
           <div className="text-slate-100 text-md">{fighter2.Name}</div>

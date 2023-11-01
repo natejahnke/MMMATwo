@@ -13,6 +13,8 @@ import supabase from "~/utils/supabase";
 
 export const loader = async ({ params }) => {
   const { eventId } = params;
+
+  // Fetch fights data
   const { data: fights, error: fightsError } = await supabase
     .from("Event")
     .select("*")
@@ -30,10 +32,13 @@ export const loader = async ({ params }) => {
 export default function EventPage() {
   const { fights } = useLoaderData();
   const { eventId } = useParams();
-  console.log(eventId);
+  // console.log(eventId);
   const event = useEvent(eventId);
-  console.log(event);
-  const defaultMainCardCount = event && event.PPV ? 6 : 5;
+  const eventDetails = event.read();
+  // console.log(event);
+  const defaultMainCardCount = eventDetails && eventDetails.PPV ? 6 : 5;
+  const mainStartTime = eventDetails.MainStartTime; // Use from hook
+  const prelimStartTime = eventDetails.PrelimStartTime; // Use from hook
 
   const [searchParams] = useSearchParams(); // <-- added this line
   const initialFilter = searchParams.get("filter") || "MAIN CARD";
@@ -56,6 +61,30 @@ export default function EventPage() {
       ? index < defaultMainCardCount
       : index >= defaultMainCardCount
   );
+
+  function convertToUserTime(timeStr, originalTimeZone = 'America/Chicago') { // Default to CST
+    // Create a date object. You can use any date, as we're only interested in time.
+    const date = new Date(`1970-01-01T${timeStr}${originalTimeZone === 'America/Chicago' ? '-06:00' : 'Z'}`);
+  
+    // Format time
+    const timeFormatter = new Intl.DateTimeFormat('en-US', {
+      hour: 'numeric',
+      minute: '2-digit',
+      second: '2-digit',
+      timeZoneName: 'short',
+      hour12: true,
+      timeZone: originalTimeZone // Ensure that we use the original time zone for formatting
+    });
+  
+    let timeParts = timeFormatter.formatToParts(date);
+    let formattedTime = `${timeParts.find(part => part.type === 'hour').value}:${timeParts.find(part => part.type === 'minute').value} ${timeParts.find(part => part.type === 'dayPeriod').value} ${timeParts.find(part => part.type === 'timeZoneName').value}`;
+  
+    return formattedTime;
+  }
+  
+ 
+  
+  
 
   return (
     <div className="mx-2 mt-2 flex flex-col">
@@ -88,12 +117,13 @@ export default function EventPage() {
         <div>
           {/* Your new text element here */}
           <span className="text-secondary">
-            {currentFilter === "MAIN CARD"
-              ? "9:00 PM CDT"
-              : currentFilter === "PRELIMS"
-              ? "7:00 PM CDT"
-              : ""}
-          </span>
+  {currentFilter === "MAIN CARD"
+    ? convertToUserTime(mainStartTime || "21:00:00") // Use database value or fallback
+    : currentFilter === "PRELIMS"
+    ? convertToUserTime(prelimStartTime || "17:00:00") // Use database value or fallback
+    : ""}
+</span>
+
         </div>
       </div>
 
