@@ -58,7 +58,7 @@ export default function EventPage() {
   );
 
   return (
-    <div className="mx-2 mt-2">
+    <div className="mx-2 mt-2 flex flex-col">
       <Suspense fallback={<EventBannerSkeleton />}>
         <EventBanner event={event.read()} />
       </Suspense>
@@ -97,7 +97,7 @@ export default function EventPage() {
         </div>
       </div>
 
-      <div className="overflow-y-auto  mb-2">
+      <div className="overflow-y-auto mb-2" style={{ height: 'calc(100vh - 300px)' }}> {/* Adjust 100px as needed */}
         {filteredMatchups.map((matchup, index) => (
           <MatchupContainer
             matchup={matchup}
