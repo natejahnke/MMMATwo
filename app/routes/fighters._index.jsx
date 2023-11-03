@@ -69,7 +69,7 @@ export default function Fighters() {
         <select
           value={weightClass}
           onChange={handleWeightClassChange}
-          className="border rounded p-2 w-16 bg-secondary"
+          className="border rounded p-2 w-16 bg-secondary overflow-hidden"
         >
           <option value="">All</option>
           {Object.keys(weightClassMappings).map((weightClassName) => (
