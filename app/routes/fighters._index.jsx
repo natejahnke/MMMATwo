@@ -17,6 +17,21 @@ const weightClassMappings = {
   "WOMEN'S BANTAMWEIGHT": "135 lbs."
 };
 
+const abbreviatedMappings = {
+  "FLYWEIGHT": "FLW",
+  "BANTAMWEIGHT": "BW",
+  "FEATHERWEIGHT": "FW",
+  "LIGHTWEIGHT": "LW",
+  "WELTERWEIGHT": "WW",
+  "MIDDLEWEIGHT": "MW",
+  "LIGHT HEAVYWEIGHT": "LHW",
+  "HEAVYWEIGHT": "HW",
+  "WOMEN'S STRAWEIGHT": "WSW",
+  "WOMEN'S FLYWEIGHT": "WFLW",
+  "WOMEN'S BANTAMWEIGHT": "WBW"
+};
+
+
 
 export const loader = async ({ request }) => {
   const urlParams = new URLSearchParams(request.url.search);
@@ -48,6 +63,7 @@ export const loader = async ({ request }) => {
 export default function Fighters() {
   const { fighters: allFighters } = useLoaderData();
   const [weightClass, setWeightClass] = useState("");
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
   const filteredFighters = useMemo(() => {
     const weight = weightClassMappings[weightClass];
@@ -57,27 +73,40 @@ export default function Fighters() {
     return allFighters;  // return all fighters if no weight class is selected
   }, [allFighters, weightClass]);
 
+  const reverseAbbreviatedMappings = Object.fromEntries(
+    Object.entries(abbreviatedMappings).map(([key, value]) => [value, key])
+  );
+  
   const handleWeightClassChange = (e) => {
-    setWeightClass(e.target.value);
+    const selectedText = e.target.options[e.target.selectedIndex].text;
+    const weightClass = reverseAbbreviatedMappings[selectedText] || selectedText;
+    setWeightClass(weightClass);
+    e.target.blur();
   };
+  
   
 
   return (
     <div className="container mx-auto p-4">
       <div className="flex justify-between items-center mb-4 text-main">
         <h1 className="text-xl">Fighters</h1>
+        <div 
+        >
         <select
           value={weightClass}
           onChange={handleWeightClassChange}
-          className="border rounded p-2 w-16 bg-secondary overflow-hidden"
+          onFocus={() => setIsDropdownOpen(true)}
+          onBlur={() => setIsDropdownOpen(false)}
+          className="border rounded p-2 w-18 bg-secondary overflow-hidden"
         >
           <option value="">All</option>
           {Object.keys(weightClassMappings).map((weightClassName) => (
             <option key={weightClassName} value={weightClassName}>
-              {weightClassName}
+              {isDropdownOpen ? weightClassName : abbreviatedMappings[weightClassName]}
             </option>
           ))}
         </select>
+      </div>
       </div>
       <div className="grid grid-cols-3 gap-2">
         {filteredFighters.map((fighter, index) => {
