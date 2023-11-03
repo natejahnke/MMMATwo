@@ -89,3 +89,5 @@ export default function EventsIndex() {
     </div>
   );
 }
+
+// File: MMMATwo/app/routes/events._index.jsx
