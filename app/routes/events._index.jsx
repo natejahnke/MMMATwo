@@ -11,9 +11,13 @@ function EventCardSkeleton() {
 }
 
 export const loader = async () => {
+  const currentDate = new Date();
+  currentDate.setDate(currentDate.getDate() - 1);  // Subtract 1 day from the current date
+
   const eventsPromise = supabase
     .from("Calendar")
     .select("*")
+    .gt('Date', currentDate.toISOString().split('T')[0])  // Use the 'gt' (greater than) operator to filter events
     .order("Date", { ascending: true })
     .then((data) => {
       console.log("Data from supabase:", data); // Debug log here
